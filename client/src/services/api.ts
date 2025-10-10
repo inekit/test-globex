@@ -1,7 +1,7 @@
-import axios from "axios";
-import { User, ApiResponse } from "../types/user";
+import axios from 'axios';
+import { User, ApiResponse } from '../types/user';
 
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = 'http://localhost:3000';
 
 export const userApi = {
   // Получить всех пользователей
@@ -10,7 +10,7 @@ export const userApi = {
       const response = await axios.get<ApiResponse>(API_BASE_URL);
       return response.data.data;
     } catch (error) {
-      console.error("Ошибка при получении пользователей:", error);
+      console.error('Ошибка при получении пользователей:', error);
       throw error;
     }
   },
@@ -19,11 +19,11 @@ export const userApi = {
   searchUsers: async (term: string): Promise<User[]> => {
     try {
       const response = await axios.get<ApiResponse>(
-        `${API_BASE_URL}?term=${encodeURIComponent(term)}`
+        `${API_BASE_URL}?term=${encodeURIComponent(term)}`,
       );
       return response.data.data;
     } catch (error) {
-      console.error("Ошибка при поиске пользователей:", error);
+      console.error('Ошибка при поиске пользователей:', error);
       throw error;
     }
   },
