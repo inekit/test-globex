@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Расширенный список сотрудников - WebSoft HCM</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+      }
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+      .header {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: white;
+        padding: 30px;
+        text-align: center;
+      }
+      .header h1 {
+        margin: 0;
+        font-size: 2.5em;
+        font-weight: 300;
+      }
+      .content {
+        padding: 30px;
+      }
+      .search-box {
+        margin-bottom: 30px;
+        text-align: center;
+      }
+      .search-box input {
+        padding: 12px 20px;
+        font-size: 16px;
+        border: 2px solid #ddd;
+        border-radius: 25px;
+        width: 300px;
+        outline: none;
+        transition: border-color 0.3s;
+      }
+      .search-box input:focus {
+        border-color: #4facfe;
+      }
+      .stats {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 30px;
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+      }
+      .stat-item {
+        text-align: center;
+      }
+      .stat-number {
+        font-size: 2em;
+        font-weight: bold;
+        color: #4facfe;
+      }
+      .stat-label {
+        color: #666;
+        margin-top: 5px;
+      }
+      .employee-list {
+        list-style: none;
+        padding: 0;
+      }
+      .employee-item {
+        padding: 15px 20px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        align-items: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+      .employee-item:hover {
+        background: #f8f9fa;
+        transform: translateX(5px);
+      }
+      .employee-item:last-child {
+        border-bottom: none;
+      }
+      .employee-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        margin-right: 20px;
+      }
+      .employee-info {
+        flex: 1;
+      }
+      .employee-name {
+        font-size: 18px;
+        font-weight: 500;
+        color: #333;
+        margin: 0;
+      }
+      .employee-id {
+        color: #666;
+        font-size: 14px;
+        margin-top: 5px;
+      }
+      .no-results {
+        text-align: center;
+        padding: 50px;
+        color: #666;
+        font-size: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Список сотрудников</h1>
+        <p>WebSoft HCM System</p>
+      </div>
+
+      <div class="content">
+        <div class="search-box">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Поиск сотрудника..."
+            onkeyup="filterEmployees()"
+          />
+        </div>
+
+        <% // XQuery запрос для получения всех сотрудников var employeesQuery =
+        ` for $emp in doc("collaborators")/collaborators/collaborator order by
+        $emp/fullname return
+        <employee>
+          <id>{$emp/@id}</id>
+          <name>{$emp/fullname}</name>
+        </employee>
+        `; var employees = xquery(employeesQuery); var totalEmployees =
+        employees.length; %>
+
+        <div class="stats">
+          <div class="stat-item">
+            <div class="stat-number"><%= totalEmployees %></div>
+            <div class="stat-label">Всего сотрудников</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" id="filteredCount">
+              <%= totalEmployees %>
+            </div>
+            <div class="stat-label">Отображается</div>
+          </div>
+        </div>
+
+        <ul class="employee-list" id="employeeList">
+          <% for (var i = 0; i < employees.length; i++) { var employee =
+          employees[i]; var employeeId = employee.id; var employeeName =
+          employee.name; var initials = employeeName.split('
+          ').map(function(name) { return name.charAt(0); }).join(''); %>
+          <li
+            class="employee-item"
+            data-name="<%= employeeName.toLowerCase() %>"
+          >
+            <div class="employee-avatar"><%= initials %></div>
+            <div class="employee-info">
+              <div class="employee-name"><%= employeeName %></div>
+              <div class="employee-id">ID: <%= employeeId %></div>
+            </div>
+          </li>
+          <% } %>
+        </ul>
+
+        <div class="no-results" id="noResults" style="display: none">
+          Сотрудники не найдены
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function filterEmployees() {
+        var searchTerm = document
+          .getElementById("searchInput")
+          .value.toLowerCase();
+        var employees = document.querySelectorAll(".employee-item");
+        var visibleCount = 0;
+
+        employees.forEach(function (employee) {
+          var employeeName = employee.getAttribute("data-name");
+          if (employeeName.includes(searchTerm)) {
+            employee.style.display = "flex";
+            visibleCount++;
+          } else {
+            employee.style.display = "none";
+          }
+        });
+
+        document.getElementById("filteredCount").textContent = visibleCount;
+        document.getElementById("noResults").style.display =
+          visibleCount === 0 ? "block" : "none";
+      }
+    </script>
+  </body>
+</html>

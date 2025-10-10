@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Список сотрудников</title>
+  </head>
+  <body>
+    <h1>Список сотрудников</h1>
+
+    <% // XQuery запрос для получения всех сотрудников из таблицы collaborators
+    var employees = xquery(` for $emp in
+    doc("collaborators")/collaborators/collaborator return $emp/fullname `); %>
+    <% // Вывод каждого сотрудника с новой строки for (var i = 0; i <
+    employees.length; i++) { %>
+    <div><%= employees[i] %></div>
+    <% } %>
+  </body>
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Список сотрудников - WebSoft HCM</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 40px;
+        background-color: #f5f5f5;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .employee-list {
+        list-style: none;
+        padding: 0;
+      }
+      .employee-item {
+        padding: 12px 0;
+        border-bottom: 1px solid #eee;
+        font-size: 16px;
+        color: #555;
+      }
+      .employee-item:last-child {
+        border-bottom: none;
+      }
+      .employee-item:hover {
+        background-color: #f9f9f9;
+        padding-left: 10px;
+        transition: all 0.3s ease;
+      }
+      .count {
+        text-align: center;
+        margin-top: 20px;
+        color: #666;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Список сотрудников</h1>
+
+      <% // XQuery запрос для получения списка сотрудников // Таблица:
+      collaborators, поле: fullname var query = ` for $employee in
+      doc("collaborators")/collaborators/collaborator order by
+      $employee/fullname return $employee/fullname `; // Выполнение запроса var
+      employees = xquery(query); %>
+
+      <ul class="employee-list">
+        <% // Вывод списка сотрудников for (var i = 0; i < employees.length;
+        i++) { var employeeName = employees[i]; %>
+        <li class="employee-item"><%= employeeName %></li>
+        <% } %>
+      </ul>
+
+      <div class="count">Всего сотрудников: <%= employees.length %></div>
+    </div>
+  </body>
+</html>
