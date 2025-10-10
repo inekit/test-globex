@@ -1,0 +1,103 @@
+@import '../../styles/variables';
+
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(188, 195, 208, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  padding: 20px;
+}
+
+.modalContent {
+  background: white;
+  border-radius: $border-radius-m;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: $shadow-m;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 24px 24px 48px 24px;
+  gap: 40px;
+
+  .modalClose {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    mask-image: url(./close.svg);
+    mask-size: 100%;
+    background-color: black;
+    transition: background-color 0.2s ease-out;
+    &:hover {
+      background-color: $color-purple;
+    }
+  }
+
+  .modalBody {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+    .name {
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 30px;
+      color: $color-plumbum;
+      margin: 0;
+    }
+
+    .infoSection {
+      h3 {
+        margin: 0;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 24px;
+        color: $color-plumbum;
+
+        padding-bottom: 12px;
+      }
+
+      .infoItem {
+        display: flex;
+        margin-bottom: 14px;
+        align-items: flex-start;
+        gap: 40px;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      .infoLabel {
+        width: 136px;
+
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 24px;
+        color: $color-plumbum;
+      }
+
+      .infoValue {
+        word-break: break-word;
+        flex: 1;
+
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 18px;
+        color: $color-asphalt;
+      }
+    }
+  }
+}
