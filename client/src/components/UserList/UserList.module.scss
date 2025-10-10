@@ -1,4 +1,4 @@
-@import '../../styles/variables';
+@import '../../assets/styles/variables';
 
 @keyframes spin {
   0% {
@@ -41,6 +41,7 @@
   p {
     margin: 16px 0 0 0;
     font-size: 16px;
+    font-weight: 400;
   }
 }
 
@@ -63,6 +64,7 @@
   p {
     margin: 0 0 16px 0;
     font-size: 16px;
+    font-weight: 400;
   }
 }
 
@@ -72,6 +74,7 @@
   padding: 10px 20px;
   cursor: pointer;
   font-size: 14px;
+  font-weight: 400;
   transition: background-color 0.3s ease;
   background-color: $color-blueberry;
   border-radius: $border-radius-m;
@@ -89,6 +92,7 @@
   p {
     margin: 0;
     font-size: 16px;
+    font-weight: 400;
   }
 }
 

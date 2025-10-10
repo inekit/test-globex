@@ -1,4 +1,4 @@
-@import '../../styles/variables';
+@import '../../assets/styles/variables';
 
 .searchBar {
   box-sizing: border-box;
@@ -10,6 +10,7 @@
     width: 100%;
     padding: 14px 48px 14px 24px;
     font-size: 16px;
+    font-weight: 400;
     outline: none;
     transition: border-color 0.3s ease;
     box-sizing: border-box;

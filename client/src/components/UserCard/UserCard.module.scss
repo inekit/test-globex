@@ -1,4 +1,4 @@
-@import '../../styles/variables';
+@import '../../assets/styles/variables';
 
 .userCard {
   display: flex;
@@ -17,6 +17,7 @@
   &:hover {
     box-shadow: $shadow-l;
   }
+  cursor: pointer;
 
   .name {
     height: 30px;
@@ -42,6 +43,8 @@
       padding: 0px;
       gap: 14px;
       margin: 0;
+      font-weight: 400;
+
       color: $color-asphalt;
 
       &::before {
